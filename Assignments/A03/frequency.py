@@ -36,18 +36,26 @@ class Frequency():
         return None
 
 if __name__=='__main__':
-    url = "https://www.gutenberg.org/files/2701/2701-0.txt"
+    url = "https://raw.githubusercontent.com/ShaunJPartridge/4663-Cryptography-Partridge/master/Assignments/A03/ciphertext_1.txt"
     #url = "https://www.gutenberg.org/files/2600/2600-0.txt"
+
     print("Downloading book ...")
     f = requests.get(url)
     text = f.text
 
 
     print("Calculating frequency...")
+    # creating an object of Frequency class
     F = Frequency()
 
+    # calculates the count of each letter when it reoccurs in the text
     F.count(text)
 
+    # prints the frequency of each letter in the text
     F.print()
 
-    print(F.getNth(2))
+    # prints the nth letter according to its number of occurance
+    print(F.getNth(0)) # prints the letter e because its the most occuring
+                        # letter.
+
+    
