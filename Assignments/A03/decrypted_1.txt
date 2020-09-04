@@ -10,6 +10,15 @@ cu cfl qelic cibx elhiogogq ylsuel tb -- cfic seuh cflbl fuguelm mlim al cixl og
 flel foqfkw elbukrl cfic cflbl mlim bfikk guc firl molm og riog -- cfic cfob gicoug, tgmle qum, bfikk firl i gla yoecf us sellmuh -- igm cfic qurleghlgc us cfl dludkl, yw cfl
 dludkl, sue cfl dludkl, bfikk guc dleobf seuh cfl liecf.
 
+Ciphertext to Plaintext Translation:
+a = w, b = s, c = t, d = p
+e = r, f = h, g = n, h = m
+i = a, j = c, k = l, l = e
+m = d, n = q, o = i, p = j
+q = g, r = v, s = f, t = u
+u = o, v = r, w = y, x = k
+y = b, z = x
+
 Decrypted Text:
 
 four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in liberty, and dedicated to the proposition that all men are created equal.
