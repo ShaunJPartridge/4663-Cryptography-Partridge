@@ -2,6 +2,14 @@
 Encrypted Text:
 npz aynp fg npz euxpnzfic vyk uc qzczn fk ybb cujzc ql npz ukzwiunuzc fg npz czbgucp ykj npz nleykkl fg zdub vzk. qbzcczj uc pz mpf, uk npz kyvz fg tpyeunl ykj xffj mubb, cpzapzejc npz mzyr npefixp npz dybbzl fg npz jyerkzcc, gfe pz uc neibl puc qefnpze’c rzzaze ykj npz gukjze fg bfcn tpubjezk. ykj u mubb cneurz jfmk iafk npzz munp xezyn dzkxzyktz ykj gieufic ykxze npfcz mpf ynnzvan nf afucfk ykj jzcnefl vl qefnpzec. ykj lfi mubb rkfm u yv npz bfej mpzk u byl vl dzkxzyktz iafk lfi.
 
+Ciphertext to plaintext translation:
+n = t, p = h, z = e, a = p
+y = a, f = o, g = f, e = r
+u = i, x = g, i = u, c = s
+v = m, k = n, q = b, j = d
+w = q, b = l, d = v, l = y
+t = c, r = k, m = w
+
 Decrypted Text:
 the path of the righteous man is beset on all sides by the inequities of the selfish and the tyranny of evil men. blessed is he who, in the name of charity and good will, shepherds the weak through the valley of the darkness, for he is truly his brother’s keeper and the finder of lost children. and i will strike down upon thee with great vengeance and furious anger those who attempt to poison and destroy my brothers. and you will know i am the lord when i lay my vengeance upon you.
 
