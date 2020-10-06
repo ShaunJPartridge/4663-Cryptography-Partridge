@@ -9,7 +9,8 @@ trans_matrix = {
 
 # print out original
 for k,v in trans_matrix.items():
-    print(f"{k} : {v}")
+    #for in 
+    print(f"{k} : {v}") # had [0][0]
 
 # sort the matrix
 sorted_matrix = sorted(trans_matrix.items())
