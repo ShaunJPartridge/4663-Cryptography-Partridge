@@ -4,4 +4,4 @@
 | :---: | ----------- | ---------------------- |
 |   A03    |     https://github.com/ShaunJPartridge/4663-Cryptography-Partridge/tree/master/Assignments/A03        |      Frequency Analysis                  |
 |   A04    |     https://github.com/ShaunJPartridge/4663-Cryptography-Partridge/tree/master/Assignments/A04        |      ADFGX Cipher                        |
-|   A05    |
+|   A05    |     https://github.com/ShaunJPartridge/4663-Cryptography-Partridge/tree/master/Assignments/A05        |      Vigenere Cipher                     |
