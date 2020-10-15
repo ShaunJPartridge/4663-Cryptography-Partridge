@@ -2,6 +2,7 @@ import string
 import sys
 import os
 import requests
+import operator
 from urllib.request import urlopen
 
 alphabet = [chr(x+97) for x in range(26)]
@@ -36,11 +37,14 @@ typical_frequency = {
 }
 
 class frequency():
+
     def __init__(self):
         self.text = ""
         self.freq = {}
         self.freq_percent = {}
         self.sort_freq = None
+        self.key_length_possibilities = []
+        self.correct_length_size = 0
 
         for l in alphabet:
             self.freq[l] = 0
@@ -59,8 +63,7 @@ class frequency():
             self.freq_percent[k] = round(self.freq[k] / len(text),2)
         
         # https://realpython.com/python-lambda/
-        self.sort_freq = sorted(self.freq.items(), key=lambda x: x[1], reverse=True)
-    
+        self.sort_freq = sorted(self.freq.items(), key=lambda x: x[1], reverse=True)  
 
     def print(self):
         
@@ -70,135 +73,98 @@ class frequency():
         else:
             print(self.freq)
 
+
     def getNth(self,n):
         if self.sort_freq:
             return self.sort_freq[n][0]
 
-        return None
-
-    
+        return None   
 
     def Incidence_of_Coincidence(self,text,keylength):
+
         sum = 0
         IC = 0.0
         i = 0
         N = len(text)
-        #N = keylength
-        #self.count(text)
+        
         for c in self.freq.values():
             if c >= 1:
                 i += 1
                 if i <= N:
-                    #print(c,c-1)
+                    
                     sum += c * (c - 1)
+
         # Resets self.freq values to zero after using the frequencies for the calculation
         self.freq = dict.fromkeys(self.freq, 0)
-        #print(sum)
                
         IC = sum / ( N*(N-1))
         IC = round(IC,5)
-        #return IC
-        #print(IC)
+       
         return IC
         
-    def groups(self,text,keylength):
+    def Average_IC(self,**kwargs):# was self,text
+
+        input_file = kwargs.get('input',None)
+        keylength = kwargs.get('output',None)
+        #key = kwargs.get('key',None)
+        #key_length = kwargs.get('keylength',None)
+
+        #cipheredtext = cipheredtext.lower()
+
+        # should test if file exists
+        with open(input_file) as f:
+            text = f.read()
+        text = ciphertext.lower()
 
         # Create dictionary to hold the amount of groups equivalent to the
         # the length of key
+        text = text.replace(" ","")
+
         
         groups = {}
-        for num in range(keylength):
-            groups[num] = []
+        tmp_dict = {}
 
+        for i in range(2,16):
+            for num in range(i):
+                groups[num] = []
+                
         # Appends all the letters from the text to each group or dictionary key
         # that are used to find the average Incidence of Coincidence of the groups
-        index = 0
-        num = 0.0
-        for letter in text:
-            groups[index].append(letter)
-            index += 1
-            index = index % keylength
-        
-        j = 0
-        #l = 0
-        sum = 0.0
-        avg_IC = 0.0
-        tmp_list = []
-        for j in groups.keys():
+            index = 0
+            num = 0.0
 
-            tmp_list.clear()
-            tmp_list = groups[j]
+            for letter in text:
+                groups[index].append(letter)
+                index += 1
+                index = index % i 
+           
+            j = 0
+            sum = 0.0
+            avg_IC = 0.0
+            tmp_list = []
+
+            for j in groups.keys():
+
+                tmp_list = groups[j]
             
-            tmp_str = ''.join(tmp_list)
-            #print(tmp_str)
-            self.count(tmp_str)
-            sum += self.Incidence_of_Coincidence(tmp_str,len(tmp_str))
+                tmp_str = ''.join(tmp_list)
+                
+                self.count(tmp_str)
+                sum += self.Incidence_of_Coincidence(tmp_str,len(tmp_str))
+                
+                tmp_list.clear()
 
-        sum = round(sum,5)
-        #print(sum)
-        avg_IC = sum / keylength
-        avg_IC = round(avg_IC,5)
-        print(avg_IC)
-            
-          
-       
-
+            sum = round(sum,5)
+            avg_IC = sum / i 
+            avg_IC = round(avg_IC,5)      
+                      
+            tmp_dict[i] = avg_IC
         
+        self.correct_length_size = max(tmp_dict.items(),key=operator.itemgetter(1))[0]
+        with open(keylength,'w') as f:
+            f.write(self.correct_length_size)
+        #return 
+            
 
-def Process_File(input):
-
-    key = "dogs"
-    input = input.replace(" ","")
-    print(len(input))
-    result = ""
-    i = 0
-    for ch in input:
-       if i % len(key)== 0:
-            result += ch
-       i += 1
-    
-    print(result)
-    #print(len(result))
-
-
-
-
-    
-if __name__ == "__main__":
-    
-    #url = "https://www.gutenberg.org/files/2701/2701-0.txt"
-
-    url = "https://raw.githubusercontent.com/sindresorhus/word-list/master/words.txt"
-    #print("Downloading book ...")
-    data = requests.get(url)
-    
-    #f = urllib.requests.urlopen(url)
-    words_list = data.text
-
-    for i in range(10):
-        for word in words_list:
-            if "bag" in words_list:
-                print("true")
-            else:
-                print("false")
-    #print(words_list)
-    #
-    #words_list = open("https://raw.githubusercontent.com/sindresorhus/word-list/master/words.txt").read().split() # was open("./words.txt")
-    #for i in range(10):
-     #   print(words_list[i])
-    
-    #infile = "tensw pez yqb xyimsg dmnv fhkz jbqn vgzb glmnmfwh"
-    
-    #text = infile.replace(" ","")
-
-
-    #print("Calculating frequency...")
-    #print(len(text))
-    #F = frequency()
-    
-    
-    #for i in range(2,16):
-     #   F.groups(text,i)
-   
     
 
