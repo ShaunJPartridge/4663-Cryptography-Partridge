@@ -24,22 +24,8 @@ def checkPrimes(n):
     return True
     
 
-def PrimeTest(n,m):
-    for x in range(m-1):
-        print(x+1,' ',n**(x+1)%m)
-
-
-
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
 
     checkPrimes(23)
-    PrimeTest(16,3)
-    #PrimeTest(16,10)
+    
