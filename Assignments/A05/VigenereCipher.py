@@ -23,6 +23,8 @@ class Vigenere_Cipher():
         self.dict = ""
         self.key_length = 0
         self.score = 0.0
+        self.correct_key_length = 0
+        self.Freq = frequency()
         with open("dict.txt","r") as f:
             self.dict = f.read().split("\n")
 
@@ -51,6 +53,7 @@ class Vigenere_Cipher():
         key = kwargs.get('key',None)
         key_length = kwargs.get('keylength',None)
 
+        
         #cipheredtext = cipheredtext.lower()
 
         # should test if file exists
@@ -58,12 +61,15 @@ class Vigenere_Cipher():
             ciphertext = f.read()
         ciphertext = ciphertext.lower()
 
+        self.correct_key_length = self.Freq.Average_IC(ciphertext)
+        #with open(key_length) as k:
+         #   k_length = k.read()
 
         Temp_dict = {}
 
         for word in self.dict:
 
-            if len(word) == k_length:
+            if len(word) == self.correct_key_length:# was k_length
                 Temp_dict[word] = word
         
         for word in Temp_dict.keys():
@@ -75,7 +81,11 @@ class Vigenere_Cipher():
 
         self.key = max(Temp_dict,key=Temp_dict.get)
 
-        return self.key
+        #with open(output_file,'w') as o:
+         #   o.write(self.key)
+
+        self.Decrypt(infile=ciphertext,key=self.key)
+        #return self.key
     
 
     def Encrypt(self,**kwargs):# was self,plaintext,key
@@ -215,9 +225,11 @@ if __name__ == "__main__":
     operation = params.get('op',None)
     infile = params.get('input',None)
     outfile = params.get('output',None)
+    keylength = params.get('keylength',None)
+
     key = params.get('key',None)
 
-    if not operation and not infile and not outfile and not key:
+    if not operation and not infile and not outfile and not key and not keylength:
         usage()
 
     if operation.lower() == 'encrypt':
