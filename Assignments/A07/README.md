@@ -1,7 +1,7 @@
 # Assignment 7 - Finding Primes
 # Categories:
 
-### Deterministic:
+### Deterministic
 ##### A determinstic primality test, simply outputs true if a number is prime, and false when the number is composite. Below are a couple of deterministic algorithms to test a number's primality.
 ###     - Trial Division:
 ##### This algorithm checks a number's primality by simply using the fact of a prime number only being divisible by itself and one; and doing the complete opposite, by checking if a number is divisible by some other positive integer besides itself and one, or is a composite.
@@ -38,3 +38,6 @@ bool MillerRabin(u64 n) { // returns true if n is prime, else returns false.
     return true;
 }
 ```
+### References:
+- <a id="1">[1]</a>: https://brilliant.org/wiki/prime-testing/
+- <a id="2">[2]</a>: https://cp-algorithms.com/algebra/primality_tests.html
