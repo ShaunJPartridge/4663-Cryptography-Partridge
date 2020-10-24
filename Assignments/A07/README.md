@@ -1,5 +1,5 @@
 # Assignment 7 - Finding Primes
-## Categories:
+# Categories:
 
 ### Deterministic:
 ##### A determinstic primality test, simply outputs true if a number is prime, and false when the number is composite. Below are a couple of deterministic algorithms to test a number's primality.
