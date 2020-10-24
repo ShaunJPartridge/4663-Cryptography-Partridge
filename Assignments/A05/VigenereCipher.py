@@ -50,18 +50,21 @@ class Vigenere_Cipher():
           
         input_file = kwargs.get('input',None)
         output_file = kwargs.get('output',None)
-        key = kwargs.get('key',None)
-        key_length = kwargs.get('keylength',None)
+        #key = kwargs.get('key',None)
+        #key_length = kwargs.get('keylength',None)
 
         
         #cipheredtext = cipheredtext.lower()
 
         # should test if file exists
-        with open(input_file) as f:
+        with open(input_file, 'r') as f:
             ciphertext = f.read()
         ciphertext = ciphertext.lower()
 
+
         self.correct_key_length = self.Freq.Average_IC(ciphertext)
+
+        input_file = ciphertext
         #with open(key_length) as k:
          #   k_length = k.read()
 
@@ -81,10 +84,10 @@ class Vigenere_Cipher():
 
         self.key = max(Temp_dict,key=Temp_dict.get)
 
-        #with open(output_file,'w') as o:
-         #   o.write(self.key)
+        with open(output_file,'w') as o:
+            o.write(self.key)
 
-        self.Decrypt(infile=ciphertext,key=self.key)
+        #self.Decrypt(ciphertext,self.key)
         #return self.key
     
 
@@ -95,7 +98,7 @@ class Vigenere_Cipher():
         key = kwargs.get('key',None)
 
         # should test if file exists
-        with open(input_file) as f:
+        with open(input_file, 'r') as f:
             plaintext = f.read()
 
         plaintext = plaintext.lower()
@@ -113,7 +116,7 @@ class Vigenere_Cipher():
             else:
                 self.ciphered_text += letter
 
-        with open(output_file,'w') as f:
+        with open(output_file, 'w') as f:
             f.write(self.ciphered_text)
         #return self.ciphered_text
 
@@ -129,7 +132,7 @@ class Vigenere_Cipher():
         #cipheredtext = cipheredtext.lower()
 
         # should test if file exists
-        with open(input_file) as f:
+        with open(input_file, 'r') as f:
             ciphertext = f.read()
         ciphertext = ciphertext.lower()
         self.plain_text = ""
@@ -213,7 +216,7 @@ if __name__ == "__main__":
     Change the required params value below accordingly.
     """
 
-    required_params = 3 # adjust accordingly
+    required_params = 2 # adjust accordingly
 
     # get processed command line arguments 
     _,params = mykwargs(sys.argv[1:])
@@ -225,20 +228,21 @@ if __name__ == "__main__":
     operation = params.get('op',None)
     infile = params.get('input',None)
     outfile = params.get('output',None)
+    key = params.get('key',None)
     keylength = params.get('keylength',None)
 
-    key = params.get('key',None)
+    
 
-    if not operation and not infile and not outfile and not key and not keylength:
+    if not operation and not infile and not outfile:#was and not key and not keylength
         usage()
 
     if operation.lower() == 'encrypt':
         VC.Encrypt(**params)
-    elif operation.lower() == 'decrypt':
+    if operation.lower() == 'decrypt':
         VC.Decrypt(**params)
-    elif operation.lower() == 'averageIC':
+    if operation.lower() == 'averageic':
         F.Average_IC(**params)
-    elif operation.lower() == 'breakVigenereCipher':
+    if operation.lower() == 'breakvigenerecipher':
         VC.BreakVigenereCipher(**params)
     else:
         usage()

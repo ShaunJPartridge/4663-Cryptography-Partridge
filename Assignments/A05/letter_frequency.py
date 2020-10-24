@@ -102,19 +102,19 @@ class frequency():
        
         return IC
         
-    def Average_IC(self,**kwargs):# was self,text
+    def Average_IC(self,text):# was self,text
 
-        input_file = kwargs.get('input',None)
-        keylength = kwargs.get('output',None)
+        #input_file = kwargs.get('input',None)
+        #keylength = kwargs.get('output',None)
         #key = kwargs.get('key',None)
         #key_length = kwargs.get('keylength',None)
 
         #cipheredtext = cipheredtext.lower()
 
         # should test if file exists
-        with open(input_file) as f:
-            text = f.read()
-        text = ciphertext.lower()
+       # with open(input_file) as f:
+        #    text = f.read()
+        text = text.lower()
 
         # Create dictionary to hold the amount of groups equivalent to the
         # the length of key
@@ -161,9 +161,9 @@ class frequency():
             tmp_dict[i] = avg_IC
         
         self.correct_length_size = max(tmp_dict.items(),key=operator.itemgetter(1))[0]
-        with open(keylength,'w') as f:
-            f.write(self.correct_length_size)
-        #return 
+        #with open(keylength,'w') as f:
+         #   f.write(self.correct_length_size)
+        return self.correct_length_size
             
 
     
