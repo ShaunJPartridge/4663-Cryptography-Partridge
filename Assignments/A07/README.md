@@ -71,8 +71,58 @@ time passes, the algorithm times out and starts over from scratch.
 ####      Pratt Certificates:
 ####
 ```
-Now the idea behind Pratt certificates is that a number {n} is prime if and only if the multiplicative group (Z/nZ)^*} is cyclic of order n-1. So if we can produce an element a in  (Z/nZ) such that a^(n-1) = 1  but a^(n-1)/p != 1 for all primes p | n, then it will follow that (Z/nZ)^* contains a cyclic group of order n-1. This will imply that n is prime, because otherwise the Euler function of(n) < n-1.
+Now the idea behind Pratt certificates is that a number n is prime if and only if the multiplicative group (Z/nZ)^* is cyclic of order n-1. So if we can produce an element a in  (Z/nZ) such that a^(n-1) = 1 but a^(n-1)/p != 1 for all primes p | n, then it will follow that (Z/nZ)^* contains a cyclic group of order n-1. This will imply that n is prime, because otherwise the Euler function of(n) < n-1.
 ```
+### Compositeness
+##### "A composite number is a positive integer that can be formed by multiplying two smaller positive integers. Equivalently, it is a positive integer that has at least one divisor other than 1 and itself. Every positive integer is composite, prime, or the unit 1, so the composite numbers are exactly the numbers that are not prime and not a unit."
+####      Fermat Compositeness Test:
+#### This test is done by applying Fermat's little theorem. "If this test determines that an odd number n, is composite, it is guaranteed to be so, otherwise the number is either a prime or a Carmichael number (if all coprime bases from 2 to (n-1)/2 are considered, otherwise a Fermat pseudoprime to all coprime bases considered."
+```
+import random
+def isPrime(n, k):
+    for i in range(k):
+        a = random.randrange(2, n)  # 2 <= a <= n-1
+        if pow(a, n-1, n) != 1:     # compute a^(n-1) mod n
+            return False            # definitely composite
+    else:
+        return True   
+ ```
+####      Miller-Rabin Test:
+#### Miller uses the contrapositive of the following theorem:
+```
+Let p be an odd prime, and let p-1 = 2^s x d, where d is an odd integer and s is a positive integer. Also let a be a positive integer coprime to p. Then at least one of the following must hold:
+-   Some of a^(2^s x d), a^(2^s-1 x d),..., a^d is congruent to -1(mod p).
+-   a^d is congruent to 1 (mod p).
+```
+#### "That is, if for some a, neither of the above holds, then p is clearly not prime.
+```
+import random
+def isPrime(n, k):
+    if n < 2: return False
+    if n < 4: return True
+    if n % 2 == 0: return False    # speedup
+
+    # now n is odd > 3
+    s = 0
+    d = n-1
+    while d % 2 == 0:
+        s += 1
+        d //= 2
+    # n = 2^s * d where d is odd
+
+    for i in range(k):
+        a = random.randrange(2, n-1)    # 2 <= a <= n-2
+        x = (a**d) % n
+        if x == 1: continue
+        for j in range(s):
+            if x == n-1: break
+            x = (x * x) % n
+        else:
+            return False
+    return True
+```
+
+
 ### References:
 - <a id="1">[1]</a>: https://brilliant.org/wiki/prime-testing/
 - <a id="2">[2]</a>: https://cp-algorithms.com/algebra/primality_tests.html
@@ -80,3 +130,5 @@ Now the idea behind Pratt certificates is that a number {n} is prime if and only
 - <a id="4">[4]</a>: https://link.springer.com/referenceworkentry/10.1007%2F978-1-4419-5906-5_446
 - <a id="5">[5]</a>: https://luca-giuzzi.unibs.it/corsi/Support/papers-cryptography/goldwasserkilian.pdf
 - <a id="6">[6]</a>: https://amathew.wordpress.com/2011/03/04/gila-2-pratt-certificates-for-primality/
+- <a id="7">[7]</a>: https://oeis.org/wiki/Compositeness
+
