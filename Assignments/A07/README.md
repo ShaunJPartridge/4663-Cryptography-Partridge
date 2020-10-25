@@ -76,7 +76,7 @@ Now the idea behind Pratt certificates is that a number n is prime if and only i
 ### Compositeness
 ##### "A composite number is a positive integer that can be formed by multiplying two smaller positive integers. Equivalently, it is a positive integer that has at least one divisor other than 1 and itself. Every positive integer is composite, prime, or the unit 1, so the composite numbers are exactly the numbers that are not prime and not a unit."
 ####      Fermat Compositeness Test:
-#### This test is done by applying Fermat's little theorem. "If this test determines that an odd number n, is composite, it is guaranteed to be so, otherwise the number is either a prime or a Carmichael number (if all coprime bases from 2 to (n-1)/2 are considered, otherwise a Fermat pseudoprime to all coprime bases considered."
+##### This test is done by applying Fermat's little theorem. "If this test determines that an odd number n, is composite, it is guaranteed to be so, otherwise the number is either a prime or a Carmichael number (if all coprime bases from 2 to (n-1)/2 are considered, otherwise a Fermat pseudoprime to all coprime bases considered."
 ```
 import random
 def isPrime(n, k):
@@ -88,13 +88,13 @@ def isPrime(n, k):
         return True   
  ```
 ####      Miller-Rabin Test:
-#### Miller uses the contrapositive of the following theorem:
+##### Miller uses the contrapositive of the following theorem:
 ```
 Let p be an odd prime, and let p-1 = 2^s x d, where d is an odd integer and s is a positive integer. Also let a be a positive integer coprime to p. Then at least one of the following must hold:
 -   Some of a^(2^s x d), a^(2^s-1 x d),..., a^d is congruent to -1(mod p).
 -   a^d is congruent to 1 (mod p).
 ```
-#### "That is, if for some a, neither of the above holds, then p is clearly not prime.
+##### "That is, if for some a, neither of the above holds, then p is clearly not prime."
 ```
 import random
 def isPrime(n, k):
@@ -121,7 +121,35 @@ def isPrime(n, k):
             return False
     return True
 ```
+####       Solovay-Strassen Primality Test:
+##### This tests is a probablistic test to determine if a number is composite or probably prime and can be referred to as an Euler-Jacobi pseudoprime test.
+```
+Euler proved that for any prime number p and any integer a,
 
+a^(p-1)/2 is congruent to (a/p)(mod p) where (a/p) is the Legendre symbol. The Jacobi symbol is a generalisation of the Legendre symbol to (a/n), where n can be any odd integer. The Jacobi symbol can be computed in time O((log n)²) using Jacobi's generalization of law of quadratic reciprocity.
+
+Given an odd number n we can contemplate whether or not the congruence
+
+a^(n-1)/2 is congruent to (a/n)(mod n) holds for various values of the "base" a, given that a is relatively prime to n. If n is prime then this congruence is true for all a. So if we pick values of a at random and test the congruence, then as soon as we find an a which doesn't fit the congruence we know that n is not prime (but this does not tell us a nontrivial factorization of n). This base a is called an Euler witness for n; it is a witness for the compositeness of n. The base a is called an Euler liar for n if the congruence is true while n is composite.
+
+For every composite odd n, at least half of all bases
+
+ a in (Z/nZ)^*
+are (Euler) witnesses as the set of Euler liars is a proper subgroup of (Z/nZ)^*. For example, for n=65, the set of Euler liars has order 8 and {1,8,14,18,47,51,57,64}, and (Z/nZ)^* has order 48.
+This contrasts with the Fermat primality test, for which the proportion of witnesses may be much smaller. Therefore, there are no (odd) composite n without many witnesses, unlike the case of Carmichael numbers for Fermat's test.
+```
+```
+inputs: n, a value to test for primality
+        k, a parameter that determines the accuracy of the test
+output: composite if n is composite, otherwise probably prime
+
+repeat k times:
+    choose a randomly in the range [2,n − 1]
+    x <- (a/n)
+    if x = 0 or a^(n-1)/2 not congruent to x (mod n) then 
+        return composite
+return probably prime
+```
 
 ### References:
 - <a id="1">[1]</a>: https://brilliant.org/wiki/prime-testing/
@@ -131,4 +159,5 @@ def isPrime(n, k):
 - <a id="5">[5]</a>: https://luca-giuzzi.unibs.it/corsi/Support/papers-cryptography/goldwasserkilian.pdf
 - <a id="6">[6]</a>: https://amathew.wordpress.com/2011/03/04/gila-2-pratt-certificates-for-primality/
 - <a id="7">[7]</a>: https://oeis.org/wiki/Compositeness
+- <a id="8">[8]</a>: https://en.wikipedia.org/wiki/Solovay%E2%80%93Strassen_primality_test
 
