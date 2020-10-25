@@ -71,7 +71,7 @@ time passes, the algorithm times out and starts over from scratch.
 ####      Pratt Certificates:
 ####
 ```
-Now the idea behind Pratt certificates is that a number {n} is prime if and only if the multiplicative group {(\mathbb{Z}/n\mathbb{Z})^*} is cyclic of order {n-1}. So if we can produce an element {a \in  (\mathbb{Z}/n\mathbb{Z})} such that {a^{n-1} =1 } but {a^{(n-1)/p} \neq  1} for all primes {p \mid n}, then it will follow that {(\mathbb{Z}/n\mathbb{Z})^*} contains a cyclic group of order {n-1}. This will imply that {n} is prime, because otherwise {\phi(n) <  n-1}.
+Now the idea behind Pratt certificates is that a number {n} is prime if and only if the multiplicative group (Z/nZ)^*} is cyclic of order n-1. So if we can produce an element a in  (Z/nZ) such that a^(n-1) = 1  but a^(n-1)/p != 1 for all primes p | n, then it will follow that (Z/nZ)^* contains a cyclic group of order n-1. This will imply that n is prime, because otherwise the Euler function of(n) < n-1.
 ```
 ### References:
 - <a id="1">[1]</a>: https://brilliant.org/wiki/prime-testing/
