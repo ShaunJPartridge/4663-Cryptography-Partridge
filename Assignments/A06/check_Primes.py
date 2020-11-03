@@ -3,6 +3,7 @@ import sys
 import math
 import pprint
 
+
 def mykwargs(argv):
     '''
     Processes argv list into plain args (list) and kwargs (dict).
