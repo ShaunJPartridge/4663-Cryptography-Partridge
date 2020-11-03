@@ -31,6 +31,7 @@ def mykwargs(argv):
             args.append(arg)
     return args,kargs
 
+<<<<<<< HEAD
 #def main(args,**kwargs):
  #   """ Example main function. Of course params would change as necessary.
   #  Params:
@@ -39,6 +40,8 @@ def mykwargs(argv):
     #pprint.pprint(args)
     #pprint.pprint(kwargs)
 
+=======
+>>>>>>> 2a85798c937bca058bc35c7a4470a77502a8a565
 def usage(message=None):
     if message:
         print(message)
@@ -61,13 +64,17 @@ def isPrime(**kwargs):
     N = Values[i]
   
   print(Values)
+<<<<<<< HEAD
   #o = open("outfile.txt",'w')
+=======
+>>>>>>> 2a85798c937bca058bc35c7a4470a77502a8a565
 
   if N > 1: 
       
   # Iterate from 2 to n / 2  
     for i in range(2, N): 
          
+<<<<<<< HEAD
        # If num is divisible by any number between  
       # 2 and n / 2, it is not prime  
       if (N % i) == 0: 
@@ -76,6 +83,15 @@ def isPrime(**kwargs):
           PrimeFactors(N)
           return False
           #break
+=======
+      # If num is divisible by any number between  
+      # 2 and n / 2, it is not prime  
+      if (N % i) == 0: 
+
+          # Call function PrimeFactors to get the prime factors of a number
+          PrimeFactors(N)
+          return False
+>>>>>>> 2a85798c937bca058bc35c7a4470a77502a8a565
           
           
     else: 
@@ -87,6 +103,7 @@ def isPrime(**kwargs):
     return False   
 
 def PrimeFactors(n): 
+<<<<<<< HEAD
     
 
     Factors = []
@@ -113,10 +130,42 @@ def PrimeFactors(n):
     return Factors
     
 
+=======
+    
+    # List to hold prime factors
+    Factors = []
+    # Print the number of two's that divide n and add to Factors
+    while n % 2 == 0: 
+        Factors.append(2)
+        print(2)
+        n = n / 2
+          
+    # n must be odd at this point 
+    # so a skip of 2 ( i = i + 2) can be used 
+    for i in range(3,int(math.sqrt(n))+1,2): 
+          
+        # while i divides n , print i and divide n and append i to Factors
+        while n % i== 0: 
+            Factors.append(i)
+            print(i)
+            n = n / i
+              
+    # Condition if n is a prime 
+    # number greater than 2 
+    if n > 2: 
+        print(int(n))
+    return Factors # return prime factors
+    
+
+>>>>>>> 2a85798c937bca058bc35c7a4470a77502a8a565
     
 if __name__ == "__main__":
 
     #GetPrimes(72490732415291)
     isPrime(72490732415291)
     isPrime(3)
+<<<<<<< HEAD
     
+=======
+    
+>>>>>>> 2a85798c937bca058bc35c7a4470a77502a8a565
