@@ -109,7 +109,19 @@ def public_key(id):
             key = f.read() 
         
         return handle_response({"public_key":key},{"id":id})
-    
+
+@app.route('/message', methods = ['GET', 'POST', 'DELETE'])
+def message_handler():
+    """ public_key
+        Description: receives messages
+    """
+    print(request.method)
+    print(request.json)
+
+    with open("messages.txt","w") as f:
+        f.write(json.dumps(request.json))
+
+    return request.json   
 
 #   _   _ _____ _     ____  _____ ____  
 #  | | | | ____| |   |  _ \| ____|  _ \ 
