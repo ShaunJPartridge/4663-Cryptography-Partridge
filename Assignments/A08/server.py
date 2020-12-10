@@ -99,15 +99,19 @@ def public_key(id):
         Description: gets you the public key
     """
 
+    
     # os.path.join joins string segments to make a directory path
-    key_path = os.path.join('keys',id+'.public.pem')
+
+    key_path = os.path.join('key',id+'.public.pem')
 
     # os.path.isfile returns true if file exists
+
     if os.path.isfile(key_path): 
+
         # open and read key
-        with open(os.path.join('keys',id+'.public.pem')) as f:
+        with open(os.path.join('key',id+'.public.pem')) as f:
             key = f.read() 
-        
+    
         return handle_response({"public_key":key},{"id":id})
 
 @app.route('/message', methods = ['GET', 'POST', 'DELETE'])
@@ -183,4 +187,4 @@ def handle_response(data,params=None,error=None):
     return jsonify(result)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080,debug=True)
+    app.run(host='localhost', port=8082,debug=True)

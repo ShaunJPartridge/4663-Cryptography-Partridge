@@ -51,7 +51,12 @@ if __name__=='__main__':
 
     func_key = getChoice()
 
-    print(func_key)
-    while True:
-        choice_functions[func_key]()
-        func_key = getChoice()
+    crypt_helper.store_keys()
+    crypt_helper.loadkeys()
+
+    p = requests.get('http://localhost:8082/public_key/key.private.pem')
+
+    #print(func_key)
+    #while True:
+     #   choice_functions[func_key]()
+      #  func_key = getChoice()
