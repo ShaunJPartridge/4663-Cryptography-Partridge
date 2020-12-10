@@ -25,12 +25,31 @@ class Crypto:
                         one of the small Fermat primes 3, 5, 17, 257 or 65537.
         key_size (int) – The length in bits of the modulus. Should be at least 2048.
         """
+        self.private_key = None
+        self.public_key = None
+        
         self.private_key = rsa.generate_private_key(
             public_exponent=exp,
             key_size=ksize
             # backend=default_backend()
         )
         self.public_key = self.private_key.public_key()
+        return (self.private_key,self.public_key)
+
+    def get_storable_keys(self):
+        # Storing  Private Keys
+        private_pem = self.private_key.private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption()
+        )
+    
+        # Storing Public Key
+        public_pem = self.public_key.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo
+        )
+        return (public_pem,private_pem)
 
     def store_keys(self):
         # Storing  Private Keys
@@ -49,6 +68,7 @@ class Crypto:
         )
         with open(self.public_key_file, 'wb') as f:
             f.write(pem)
+
 
     def load_keys(self):
         # Reading the Private Key
