@@ -20,16 +20,16 @@ def is_json(myjson):
   return True
 
 # get user ids 
-with open('uids_tokens.json') as f:
+with open('uids_tokens.json',encoding='utf8') as f:
     uids_tokens = json.loads(f.read())
 
-with open('quotes.json') as f:
+with open('quotes.json',encoding='utf8') as f:
     temp = json.loads(f.read())
 quotes = []
 for row in temp:
     quotes.append(row['quote'])
 
-with open('enterpreneur-quotes.json') as f:
+with open('enterpreneur-quotes.json',encoding='utf8') as f:
     temp = json.loads(f.read())
 for row in temp:
     quotes.append(row['text'])
