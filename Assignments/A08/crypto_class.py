@@ -27,7 +27,7 @@ class Crypto:
         """
         self.private_key = None
         self.public_key = None
-        
+
         self.private_key = rsa.generate_private_key(
             public_exponent=exp,
             key_size=ksize

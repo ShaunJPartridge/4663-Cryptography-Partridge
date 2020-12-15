@@ -1,62 +1,160 @@
-#"""
-#https://requests.readthedocs.io/en/master/user/quickstart/
-#"""
-#import requests
-
-#r = requests.get('http://localhost:8080/public_key/02')
-
-#print(r.text)
-
 """
 https://requests.readthedocs.io/en/master/user/quickstart/
-https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
 """
 import requests
-from crypto_class import Crypto     # import the crypto class
-import os
+from crypto_class import Crypto 
 import sys
+import json
+import base64
+from random import shuffle
 
-crypt_helper = Crypto()             # instance of crypto class  
+# Used to create a menu interface
+from consolemenu import *
+from consolemenu.items import *
 
-def generate_keys():
-    r = requests.get('http://localhost:8080/public_key/02')
-    print(r.text)
+"""
+ Its up to you to alter the Crypto class to store keys correctly 
+ as well as use them to encrypt messages with the proper public key. 
+"""
+C = Crypto()
 
-def message():
-    m = input("Message:")
-    p = requests.post('http://localhost:8080/message',json={"message":m})
+"""
+ These two statemets generate keys and save them, but with hard
+ coded values. Definitely needs changed up. 
+"""
+C.generate_keys()
+C.store_keys()
+
+BASEURL = "http://msubackend.xyz/api/"
+
+def is_json(myjson):
+  try:
+    json_object = json.loads(myjson)
+  except ValueError as e:
+    return False
+  return True
+
+def editUser(uid,fname,lname,screen_name,email,token):
+    posturl = BASEURL+"?route=postUser"
+    payload = {
+        'uid':uid,
+        'fname':fname,
+        'lname':lname,
+        'screen_name':screen_name,
+        'email':email,
+        'token':token
+    }
+    headers = {'Content-Type': 'application/json'}
+    r = requests.post(posturl, headers=headers, json=payload)
+    return r.text
 
 
-def end_program():
-    print("Great ... quitter.")
-    sys.exit()
+def publishKey(uid,token,pubkey):
+    posturl = BASEURL+"?route=postPubKey"
+    payload = {
+        'pub_key':pubkey,
+        'uid':uid,
+        'token':token
+    }
+    headers = {'Content-Type': 'application/json'}
+    r = requests.post( posturl, headers=headers, json=payload)
+    return r.text
 
-choice_functions = {
-    "Generate Keys":generate_keys,
-    "Message":message,
-    "Quit":end_program
-}
 
-def getChoice():
-    i = 1
-    choices = [None]
-    for k,v in choice_functions.items():
-        print(f"{i}. {k}")
-        choices.append(k)
-        i += 1
-    c=input(">>> ")
-    return choices[int(c)]
+def sendMessage(from_id,to_id,message,token):
+    posturl = BASEURL+"?route=postMessage"
+    payload = {
+       'from_id':from_id,
+       'to_id':to_id,
+       'message':message,
+       'token':token
+    }
 
-if __name__=='__main__':
+    headers = {'Content-Type': 'application/json'}
+    r = requests.post(posturl, headers=headers, json=payload)
+    return r.text
 
-    func_key = getChoice()
+def getUser(**kwargs):
+    getUrl = BASEURL+"?route=getUser"
 
-    crypt_helper.store_keys()
-    crypt_helper.loadkeys()
+    params = {}
+    params['token'] = kwargs.get('token',0)
+    params['uid'] = kwargs.get('uid',0)
+    params['email'] = kwargs.get('email',0)
+    params['fname']  = kwargs.get('fname',0)
+    params['lname']  = kwargs.get('lname',0)
 
-    p = requests.get('http://localhost:8082/public_key/key.private.pem')
+    if params['token'] == 0 or params['uid'] == 0:
+        print("Error: need tokan and uid")
+        sys.exit()
+    
+    for k,v in params.items():
+        getUrl += f"&{k}={v}"
 
-    #print(func_key)
-    #while True:
-     #   choice_functions[func_key]()
-      #  func_key = getChoice()
+    r = requests.get(getUrl)
+    return r.text
+
+def getActive(**kwargs):
+    getUrl = BASEURL+"?route=getUser"
+
+    params = {}
+    params['token'] = kwargs.get('token',0)
+    params['uid'] = kwargs.get('uid',0)
+
+    if params['token'] == 0 or params['uid'] == 0:
+        print("Error: need tokan and uid")
+        sys.exit()
+    
+    for k,v in params.items():
+        getUrl += f"&{k}={v}"
+
+    r = requests.get(getUrl)
+    return r.text
+
+def getKeys(**kwargs):
+    getUrl = BASEURL+"?route=getUser"
+
+    params = {}
+    params['token'] = kwargs.get('token',0)
+    params['uid'] = kwargs.get('uid',0)
+
+    if params['token'] == 0 or params['uid'] == 0:
+        print("Error: need tokan and uid")
+        sys.exit()
+    
+    for k,v in params.items():
+        getUrl += f"&{k}={v}"
+
+    r = requests.get(getUrl)
+    return r.text
+
+if __name__== '__main__':
+
+    token = 'aaca4b4f875a7480723bc9b6c77049fb'
+    uid = '5166900'
+
+    # r = sendMessage('3818','8020','Hey Ricky Bobby. You wanna shake n bake?',token)
+    # print(r)
+
+    #key = """-----BEGIN PUBLIC KEY-----
+    #MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvI3QjAT3naoP8ZGFwKmc
+    #9b01//L0uUVKOZH33333333333333333333333333333333V5mxJzGvqYekqg0SL
+    #VGHkpH33333333333333333333333333333333uBgkJo35hwK8HfIiYtwQxCdDWi
+    #INA7XYoy5/D11GauZN0a3/7mZU4uDY6iw3Js7wNlm6job93JVGTq4Fc9QGEZz6Pk
+    #TwIDAQAB
+    #-----END PUBLIC KEY-----"""
+
+    #editUser(uid,"Shaun","Partridge","ShaunP","spartridgeb15@gmail.com",token)
+
+    with open("key.public.pem","r") as f:
+        key = f.read()
+    
+    
+    r = publishKey(uid,token,key)
+    print(r)
+
+    r = getUser(token=token,uid=5166900)
+    print(r)
+
+    r = getActive(token=token,uid=uid)
+    print(r)

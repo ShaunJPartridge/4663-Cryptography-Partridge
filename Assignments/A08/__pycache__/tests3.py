@@ -172,7 +172,7 @@ if __name__ == '__main__':
     print(encrypted)
 
     # For testing, I load same persons private key from a file
-    with open('./keys/5147600.private.key', "rb") as key_file:
+    with open("5147600.private.key", "rb") as key_file:
         private_key = serialization.load_pem_private_key(
             key_file.read(),
             password=None
