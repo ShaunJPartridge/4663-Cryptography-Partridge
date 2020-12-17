@@ -18,6 +18,8 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 
+from pprint import pp
+
 
 class ClientHelper:
     def __init__(self,**kwargs):
@@ -179,12 +181,33 @@ class ClientHelper:
 
 if __name__=='__main__':
     config = {
-        'token' : 'aaca4b4f875a7480723bc9b6c77049fb',
-        'uid' : '5166900',
-        'api' : 'http://msubackend.xyz/api/?route='
+        "token" : "aaca4b4f875a7480723bc9b6c77049fb",
+        "uid" : "5166900",
+        "api" : "http://msubackend.xyz/api/?route="
     }
+    
+    # create an instance of ClientHelper with **config, which contains ones
+    # own token, uid, and the api
     CH = ClientHelper(**config)
-    print(CH.uid)
+    # shows success and true if key is successfully published
+    pp(CH.publishKey())
+    # shows everyones public keys
+    pp(CH.getPubkeys())
+    # shows my info
+    pp(CH.getActive())
+
+    # print out users on the menu selection of deciding who to send a message to
+    pp(CH.users)
+    ## print out everyone's public keys
+    #pp(CH.pubKeys)
+    # encrypt message and post it
+
+    enc_message = CH.postMessage("Hello this is Shaun","5270200")
+    pp(enc_message)
+    #print(CH.decryptMessage(enc_message))
+
+
+    
     #result = postMessage("This is a plaintext message encrypted with public key 5147600",'5147600')
 
 
